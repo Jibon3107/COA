@@ -1,0 +1,475 @@
+
+COA
+SECTION J
+.............................
+
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG DW 'ENTER IN UPPERCASE :$'
+MSG1 DW 'NUMBER IN LOWERCASE:$'
+
+.CODE
+
+MAIN PROC
+    
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    MOV AH,9
+    LEA DX,MSG
+    INT 21H
+    
+    
+    MOV AH,1
+    INT 21H  
+    MOV BL,AL
+    ADD BL,20H
+    
+    MOV AH,2
+    MOV DL,10
+    INT 21H
+    MOV DL,13
+    INT 21H 
+    
+    MOV AH,9
+    LEA DX,MSG1
+    INT 21H
+    
+    MOV AH,2
+    MOV DL,BL
+    INT 21H
+    
+    
+    MAIN ENDP
+END MAIN
+    
+
+
+
+..............................................................................
+
+
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG DB 'HELLO$'
+
+.CODE
+
+MAIN PROC
+    
+    MOV AX,@DATA
+    MOV DS,AX
+    
+    MOV AH,9
+    LEA DX,MSG
+    INT 21H
+    
+    
+    MAIN ENDP
+END MAIN
+
+
+
+
+..................................................
+
+.model small
+.stack 100h
+.data
+msg db 'ENTER THREE INITIALS:$'
+.code
+main proc
+    
+    mov ax,@data
+    mov ds, ax 
+    
+    lea dx, msg
+    mov ah, 9
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov bl,al
+    int 21h
+    mov cl,al 
+    int 21h
+    mov ch, al
+    
+    mov ah,2
+    mov dl, 0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+    
+    mov dl,bl
+    int 21h 
+    
+    mov ah,2
+    mov dl, 0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+    
+    mov dl,cl
+    int 21h 
+    
+    mov ah,2
+    mov dl, 0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+    
+    mov dl,ch
+    int 21h 
+    
+    mov ah,4ch
+    int 21h
+    
+    main endp
+end main
+    
+
+
+
+
+.........................................
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+MSG DB 'THE SUM OF$'
+MSG1 DB ' $'
+MSG2 DB 'AND $'
+MSG3 DB ' IS $'
+.CODE 
+MAIN PROC
+    mov dl,'?' 
+    mov ah,2 
+    int 21h
+     
+    mov ah,1 
+    int 21h
+     
+    mov bl,al
+     
+    mov ah,1 
+    int 21h 
+    
+    mov cl,al
+     
+    mov ah,2 
+    mov dl,0dh  
+    int 21h 
+    mov dl,0ah 
+    int 21h 
+    
+    mov ax,@data 
+    mov ds,ax 
+    lea dx,msg 
+    mov ah,9 
+    int 21h
+     
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,bl 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    lea dx,msg2 
+    mov ah,9 
+    int 21h  
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,cl 
+    int 21h 
+     
+    lea dx,msg3 
+    mov ah,9 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+             
+    add bl,cl
+      
+    mov dl,bl 
+    mov ah,2 
+    int 21h    
+    
+    mov ah,4ch 
+    int 21h 
+    
+    MAIN ENDP
+END MAIN
+
+
+
+................................
+
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+
+MSG1 DB 'ENTER A HEX DIGIT: $'
+MSG2 DB 'IN  DECIMAL IT IS: $'
+.CODE
+MAIN PROC
+    
+    MOV ax,@data 
+    MOV ds,ax 
+    LEA dx,msg1 
+    MOV ah,9 
+    INT 21h 
+    
+    MOV ah,1 
+    INT 21h
+     
+    MOV bl,al 
+    
+    SUB bl,17d ; 
+    MOV ah,2 
+    MOV dl,0dh 
+    INT 21h
+     
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg2 
+    mov ah,9 
+    int 21h 
+    
+    mov dl,49d  
+    mov ah,2 
+    int 21h  
+    
+    mov dl,bl 
+    mov ah,2 
+    int 21h 
+    
+    mov ah,4ch
+    int 21h
+    
+    MAIN ENDP
+END MAIN
+      
+
+
+
+.......................
+
+.MODEL SMALL
+.STACK 100H
+.DATA
+     
+  MSG1 DB '**********$'
+  .CODE
+  MAIN PROC
+    
+    mov ax,@data 
+    mov ds,ax 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,0dh 
+    int 21h
+     
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h  
+    
+    mov ah,2 
+    mov dl,0dh 
+    int 21h   
+    
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,0dh 
+    int 21h 
+    
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,0dh 
+    int 21h 
+    
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h 
+    
+    mov ah,2 
+    mov dl,0dh 
+    int 21h 
+    
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h
+     
+    mov ah,2 
+    mov dl,0dh 
+    int 21h 
+    
+    mov dl,0ah 
+    int 21h 
+    
+    lea dx,msg1 
+    mov ah,9 
+    int 21h
+     
+    mov ah,2 
+    mov dl,0dh 
+    int 21h
+     
+    mov dl,0ah 
+    int 21h
+     
+    lea dx,msg1 
+    mov ah,9 
+    int 21h
+     
+    mov ah,2 
+    mov dl,0dh 
+    int 21h
+     
+    mov dl,0ah 
+    int 21h
+     
+    lea dx,msg1 
+    mov ah,9 
+    int 21h
+     
+    mov ah,2 
+    mov dl,0dh 
+    int 21h
+     
+    mov dl,0ah
+    int 21h
+     
+    lea dx,msg1 
+    mov ah,9 
+    int 21h
+     
+    mov ah,4ch 
+    int 21h
+     
+    main endp 
+end main  
+
+
+
+.................
+
+NEW CODE :
+30.10.18
+
+
+.model small
+.stack 100h
+.data
+A DB ?
+MSG DB 10,13," THE SUM OF $"
+MSG1 DB " AND $"
+MSG2 DB " IS $"
+MSG3 DW 10,13," ENTER TWO DIGIT (GREATER THAN 5) :$"
+ .code
+main proc
+    
+      MOV AX, @DATA
+      MOV DS,AX
+      
+      MOV AH,2
+      MOV DL,63
+      INT 21H
+      
+      MOV AH,9
+      LEA DX,MSG3
+      INT 21H
+      
+      MOV AH,1
+      INT 21H
+      MOV A,AL 
+      
+      MOV AH,1
+      INT 21H
+      MOV BL,AL
+      
+      MOV AH,9
+      LEA DX,MSG
+      INT 21H   
+      
+      MOV AH,2
+      MOV DL,A
+      INT 21H 
+      
+      MOV AH,9
+      LEA DX,MSG1
+      INT 21H  
+      
+      MOV AH,2
+      MOV DL,BL
+      INT 21H
+      
+      MOV AH,9
+      LEA DX,MSG2
+      INT 21H    
+      
+      ADD A,BL  
+      SUB A,58 
+      
+      MOV AH,2
+      MOV DL, 31H
+      INT 21H 
+      
+      MOV AH,2
+      MOV DL,A
+      INT 21H
+
+      MOV AH,4CH
+      INT 21H
+    
+      MAIN ENDP
+END MAIN  
+      
+     
+   
+      
+ 
+

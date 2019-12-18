@@ -1,0 +1,1619 @@
+######## 4 value compare print grater#####
+
+
+.model samll
+.stack 100h
+.data
+a db ?
+b db ?
+c db ?
+d db ?
+.code
+main proc
+    mov ah,1
+    int 21h
+    mov bh,al
+    int 21h
+    mov bl,al
+    int 21h
+    mov ch, al
+    int 21h
+    mov cl, al
+    
+    cmp bh,bl
+    jg c1
+    jmp c2
+    
+   
+   c1:
+   cmp ch,cl
+   jg l1
+   jmp l2
+   
+   
+  l1:
+  cmp bh,ch
+  jg t1
+  jmp t2
+  
+  t1:
+   mov ah,2
+   mov dl,bh
+   int 21h
+   jmp exit
+   
+  t2:
+  mov ah,2
+   mov dl,ch
+   int 21h
+   jmp exit
+   
+   
+  l2:
+  cmp bh,cl
+  jg k1
+  jmp k2
+  
+  k1:
+  mov ah,2
+   mov dl,bh
+   int 21h
+   jmp exit
+ 
+ k2:
+ mov ah,2
+   mov dl,cl
+   int 21h
+   jmp exit
+   
+   
+  c2:
+      
+  
+   cmp ch,cl
+   jg a1
+   jmp a2
+   
+   
+  a1:
+  cmp bl,ch
+  jg b1
+  jmp b2
+  
+  b1:
+   mov ah,2
+   mov dl,bl
+   int 21h
+   jmp exit
+   
+  b2:
+  mov ah,2
+   mov dl,ch
+   int 21h
+   jmp exit
+   
+   
+  a2:
+  cmp bl,cl
+  jg m1
+  jmp m2
+  
+  m1:
+  mov ah,2
+   mov dl,bl
+   int 21h
+   jmp exit
+ 
+ m2:
+ mov ah,2
+   mov dl,cl
+   int 21h
+   jmp exit
+   
+  exit:
+  mov ah,4ch
+  int 21h 
+
+
+
+#######ADD from USer#####
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov ah,1
+    int 21h
+    mov bl,al
+    int 21h
+    mov cl,al
+    
+    mov ah,2
+    add bl,cl
+    sub bl,30h
+    mov dl,bl
+    int 21h 
+    
+    main endp
+end main
+
+
+
+######ASCI code show#####
+mov ah,1
+int 21h
+mov bl,al
+mov ah,2
+mov dl,'4'
+int 21h
+sub bl,10h
+mov dl,bl
+int 21h
+######BInary inpur HEX output
+
+
+
+mov cx,16
+
+
+l1:
+mov ah,1
+int 21h
+and al,1h
+shl bx,1
+or bl,al
+loop l1 
+
+mov ah,2
+mov dl,0dh
+int 21h
+mov dl,0ah
+int 21h
+
+mov cx,4
+
+l2:
+mov dl,bh
+ror dl,4
+and dl,0fh
+cmp dl,0Ah
+jge t1
+jmp t2
+
+t1:
+xor dl,40h
+sub dl,09h
+mov ah,2
+int 21h
+shl bx,4
+loop l2
+jmp exit
+
+t2:
+or dl,30h
+mov ah,2
+int 21h
+shl bx,4
+loop l2
+
+exit:
+mov ah,4ch
+int 21h
+
+
+
+
+
+#####check register every step#####
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov ah,1
+    mov dh,'Q'
+    int 21h
+    mov dl,al
+    mov ah,010b
+    int 21h
+    mov ah,1
+    int 21h
+    mov cl,al
+    mov bh,dh
+    mov ah,2
+    mov dl,dh
+    int 21h
+    mov dl,bh
+    int 21h
+
+
+
+
+
+######D2H####
+.model small
+.stack 100h
+.data
+     msg1 db 0dh,0ah,'Do U want to convert Dec number?Enter Y or N: $'
+     msg2 db 0dh,0ah,'How many digits your number has? $'
+     msg3 db 0dh,0ah,'Result in Hex: $'
+     msg4 db 0dh,0ah,'Invalid $' 
+     msg5 db 0dh,0ah,'Enter the Decimal Number: $'  
+     msg6 db 0dh,0ah,'Enter the 1st Digit: $'
+     msg7 db 0dh,0ah,'Enter the 2nd Digit: $'
+     
+ .code                           
+ main proc 
+    
+    mov ax,@data
+    mov ds,ax 
+    
+    option:
+    mov ah,9
+    lea dx,msg1
+    int 21h 
+    
+    mov ah,1
+    int 21h ;Enter Y or N  
+    
+    cmp al,'Y'
+    je y
+    cmp al,'y'
+    je y
+    jmp n
+    
+    y:
+      mov ah,9
+      lea dx,msg2
+      int 21h
+      
+      mov ah,1
+      int 21h
+      
+      cmp al,'1'
+      je one
+      cmp al,'2'
+      je two
+      jmp invalid  
+      
+      one:   
+           mov ah,9
+           lea dx,msg5
+           int 21h
+           
+           mov ah,1
+           int 21h
+           mov bh,al
+           
+           mov ah,9
+           lea dx,msg3
+           int 21h
+           
+           mov ah,2
+           mov dl,bh
+           int 21h
+           jmp option
+            
+      
+      two: 
+           mov ah,9
+           lea dx,msg6
+           int 21h
+           
+           mov ah,1
+           int 21h
+           mov bh,al    ;For 1st digit
+           
+           mov ah,9
+           lea dx,msg7
+           int 21h  
+           
+           mov ah,1
+           int 21h
+           mov ch,al   ;For 2nd digit
+           
+           cmp bh,'1'
+           je t1
+           cmp bh,'2'
+           je l3
+           jmp invalid
+           
+           t1:
+                cmp ch,'0'
+                jge c1
+                jmp c2
+                
+               c1:
+               
+                cmp ch,'5'
+                jle l1
+                jmp c2
+          
+           
+        l1: 
+                add ch,11h
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                
+                mov dl,ch
+                mov ah,2
+                int 21h 
+                jmp option
+           
+        c2:
+                cmp ch,'6'
+                jge c3
+                jmp invalid
+                
+        c3:
+                cmp ch,'9'
+                jle l2
+                jmp invalid
+                        
+        l2:      
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                
+                mov ah,2
+                mov dl,'1'
+                int 21h
+                sub ch,6h
+                mov dl,ch
+                int 21h
+                jmp option
+               
+        l3: 
+              cmp ch,'0'
+              jge m1
+              jmp invalid
+              
+              m1:
+                cmp ch,'5'
+                jle m2 
+                jmp invalid
+                
+              m2:
+              
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                mov ah,2
+                mov dl,'1'
+                int 21h
+                add ch,4h
+                mov dl,ch
+                int 21h
+                jmp option
+              
+              
+      invalid:
+      
+          mov ah,9
+          lea dx,msg4
+          int 21h
+          jmp option
+    n:
+        mov ah,4ch
+        int 21h
+    
+    main endp
+ end main
+
+
+
+#####D20#####
+.model small
+.stack 100h
+.data
+    msg1 db 0dh,0ah,'Do U want to convert or Exit?Press Y to convert: $'
+    msg2 db 0dh,0ah,'How many digits your number has? $'
+    msg3 db 0dh,0ah,'Enter the Decimal Number: $'
+    msg4 db 0dh,0ah,'Enter the 1st digit: $ '
+    msg5 db 0dh,0ah,'Enter the 2nd digit: $ '
+    msg6 db 0dh,0ah,'Result in Octal Number: $'
+    msg7 db 0dh,0ah,'Invalid $'
+.code
+main proc
+    
+    mov ax,@data
+    mov ds,ax
+    
+    option:
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    
+    cmp al,'Y'
+    je y
+    cmp al,'y'
+    je y
+    cmp al,'N'
+    je n
+    cmp al,'n'
+    je n
+    jmp invalid
+    
+    y:
+    
+         mov ah,9
+         lea dx,msg2
+         int 21h
+         
+         mov ah,1
+         int 21h
+         mov bh,al
+         
+         cmp bh,'1'
+         je one
+         
+         cmp bh,'2'
+         je two
+         
+         jmp invalid
+         
+         
+         one:
+             mov ah,9
+             lea dx,msg3
+             int 21h
+             
+             mov ah,1
+             int 21h
+             mov bh,al
+             
+             cmp bh,'0'
+             jge c1
+             jmp c2
+             
+             c1:
+                cmp bh,'7'
+                jle if1
+                jmp c2
+                
+                if1:
+                    mov ah,9
+                    lea dx,msg6
+                    int 21h 
+                    
+                    mov ah,2
+                    mov dl,bh
+                    int 21h
+                    jmp option
+             
+                c2: 
+                cmp bh,'8'
+                je if2
+                cmp bh,'9'
+                je if2
+                jmp invalid
+                
+                if2:
+                
+                mov ah,9
+                lea dx,msg6
+                int 21h
+                
+                mov dl,'1'
+                mov ah,2
+                int 21h
+                
+                sub bh,8h
+                mov dl,bh
+                int 21h
+                jmp option
+         two:
+                 mov ah,9
+                 lea dx,msg4
+                 int 21h
+                 
+                 mov ah,1
+                 int 21h
+                 mov bh,al
+                 
+                 mov ah,9
+                 lea dx,msg5
+                 int 21h 
+                 
+                 mov ah,1
+                 int 21h
+                 mov ch,al
+                 
+                 cmp bh,'1'
+                 je l1
+                 cmp bh,'2'
+                 je l2
+                 jmp invalid
+                 
+                 l1:
+                   cmp ch,'0'
+                   jge m1
+                   jmp m2
+                   
+                   m1:
+                      cmp ch,'5'
+                      jle if3
+                      jmp m2
+                      
+                      
+                   if3:
+                   
+                        mov ah,9
+                        lea dx,msg6
+                        int 21h
+                        
+                        mov ah,2
+                        mov dl,'1'
+                        int 21h
+                        
+                        add ch,2h
+                        mov dl,ch
+                        int 21h
+                        
+                        jmp option
+                   
+                   m2:
+                        cmp ch,'6'
+                        jge m3
+                        jmp invalid
+                        
+                   m3:
+                   
+                        cmp ch,'9'
+                        jle if4
+                        jmp invalid  
+                        
+                   if4:
+                   
+                        mov ah,9
+                        lea dx,msg6
+                        int 21h
+                        
+                        mov ah,2
+                        mov dl,'2'
+                        int 21h
+                        
+                        sub ch,6h
+                        mov dl,ch
+                        int 21h
+                        
+                        jmp option
+                 
+                 l2:    
+                       cmp ch,'0'
+                       jge m4
+                       jmp invalid
+                       
+                       m4:
+                       cmp ch,'3'
+                       jle if5
+                       jmp invalid
+                       
+                       if5:
+                       
+                       mov ah,9
+                       lea dx,msg6
+                       int 21h
+                       mov ah,2
+                       
+                       mov dl,'2'
+                       int 21h
+                       add ch,4h
+                       mov dl,ch
+                       int 21h
+                       jmp option
+    
+    invalid:
+               mov ah,9
+               lea dx,msg7
+               int 21h
+               jmp option
+    
+    n:
+       mov ah,4ch
+       int 21h 
+    main endp
+end main
+                                                
+
+
+#######DEC to BIN#####
+.model samll
+.stack 100h
+.data
+msg1 db 'Input Hexa value : $'
+msg2 db 0dh,0ah, 'Output in Binary : $'
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h 
+    
+    sub bl,bl
+    
+    mov ah,1
+    int 21h
+    mov bh,al
+    int 21h
+    mov bl,al  
+    
+    sub bh,37h
+    shl bh,4
+    sub bl,37h
+    add bh,bl
+    
+    
+    mov ah,9
+    lea dx,msg2
+    int 21h
+    
+    
+    
+    mov cx,8 
+    
+    l1:
+    SHL bx,1
+    JC one
+    jmp zero
+    
+    one:
+    mov ah,2
+    mov dl,'1'
+    int 21h
+    loop l1
+    jmp exit
+    
+    zero:
+    mov ah,2
+    mov dl,'0'
+    int 21h
+    loop l1
+    
+    exit:
+    mov ah,4ch
+    int 21h
+    
+    
+
+
+#####exc####
+.model small
+.stack 100h
+.data
+msg1 db 0dh,0ah,'Do u want to convert Dec to Hexa? Press Y or N :  $'
+msg2 db 0dh,0ah,'How many digits : $'
+msg3 db 0dh,0ah,'Enter your decimal number: $'
+msg4 db 0dh,0ah,'The result is :  $'
+msg5 db 0dh,0ah,'Invalid$'
+msg6 db 0dh,0ah,'Enter 1st digit: $'
+msg7 db 0dh,0ah,'Enter 2nd digit: $'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    
+ option:
+   
+    mov ah,9
+    lea dx,msg1
+    int 21h  
+    
+    mov ah,1
+    int 21h
+    cmp al,'Y'
+    je yes
+    cmp al,'y'
+    je yes
+    jmp no
+    
+    
+  yes:
+     mov ah,9
+     lea dx,msg2
+     int 21h
+     
+     mov ah,1
+     int 21h
+     
+     cmp al,'1'
+     je t1
+     cmp al,'2'
+     je t2
+     jmp invalid
+     
+     
+    t1:
+       mov ah,9
+       lea dx,msg3
+       int 21h
+       
+       mov ah,1
+       int 21h
+       mov bh,al
+       
+       mov ah,9
+       lea dx,msg4
+       int 21h
+       
+       mov ah,2
+       mov dl,bh
+       int 21h
+       
+       jmp option 
+       
+       
+     t2:
+        mov ah,9
+        lea dx,msg6
+        int 21h
+        
+        mov ah,1
+        int 21h
+        mov bh,al
+        
+        mov ah,9
+        lea dx,msg7
+        int 21h 
+        
+        mov ah,1
+        int 21h
+        mov ch,al
+        
+        cmp bh,'1'
+        je c1
+        
+        cmp bh,'2'
+        je c2
+        
+        jmp invalid
+        
+        
+     c1:
+       cmp ch,'0'
+       jge r1
+       jmp r2
+       
+       
+      r1:
+        cmp ch,'5'
+        jle l1
+        jmp r2
+        
+        
+      l1:
+        mov ah,9
+        lea dx,msg4
+        int 21h
+        
+        
+        mov ah,2
+        add ch,11h
+        mov dl,ch
+        int 21h
+        
+        jmp option         
+      
+      
+      r2:
+         cmp ch,'6'
+         jge r3
+         
+       r3:
+          cmp ch,'9'
+          jle l2
+          
+      l2:
+         mov ah,9
+        lea dx,msg4
+        int 21h 
+        
+        mov ah,2
+        mov dl,'1'
+        int 21h
+        sub ch,6h
+        mov dl,ch
+        int 21h
+        
+        jmp option
+    
+       
+       
+     c2:
+       cmp ch,'0'
+       jge c3
+       
+     c3:  
+       
+       cmp ch,'5'
+       jle l3
+       
+       jmp invalid
+       
+       
+     l3:
+        mov ah,9
+        lea dx,msg4
+        int 21h
+        
+        mov ah,2
+        mov dl,'1'
+        int 21h
+        
+        add ch,4h
+        mov dl,ch
+        int 21h
+        
+        jmp option           
+    
+    
+  invalid:
+         mov ah,9
+         lea dx,msg5
+         int 21h
+         jmp option  
+    
+    
+    no:
+    mov ah,4ch
+    int 21h
+
+####FLAg registers####
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov bh,0FFH
+    mov cx,237AH
+    add ch,bh
+    sub cl,bh
+    inc bh
+    neg cl
+    mov ax,234H
+    mov dl,bh
+    int 21h
+    
+    main endp
+end main
+
+
+########HEX input 1#####
+mov cx,4
+
+
+
+l1:
+mov ah,1
+int 21h 
+
+cmp al,39h
+jle t1
+jmp t2
+
+t1:
+and al,0fh
+shl bx,4
+or bl,al
+loop l1
+jmp exit
+
+t2:
+sub al,37h
+and al,0fh
+shl bx,4
+or bl,al
+loop l1 
+
+exit:
+mov ah,4ch
+int 21h
+
+
+
+
+######HEX to BIN####
+mov ah,2
+mov bl,00110101b
+
+mov cx,8
+
+a1:
+shl bl,1
+jc l1
+jmp l2
+
+l1:
+mov ah,2
+mov dl,'1'
+int 21h 
+loop a1 
+jmp exit
+
+l2:
+mov ah,2
+mov dl,'0'    
+int 21h 
+loop a1
+
+exit:
+mov ah,4ch
+int 21h
+
+
+
+
+#####HEX to DEC####
+.model small
+.stack 100h
+.data
+msg db 0dh,0ah,'$'
+msg1 db 'Input symbol:$'
+msg2 db 'Output:$'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov bl,al
+    
+    mov ah,9
+    lea dx,msg
+    int 21h   
+    
+    lea dx,msg2
+    int 21h
+    
+    mov ah,2
+    mov dl,'1'
+    int 21h
+    
+    sub bl,11h
+    mov dl,bl
+    int 21h
+    
+    main endp
+end main
+    
+
+
+#####HEX to DEC 12####
+
+.model small
+.stack 100h
+.data
+     msg1 db 0dh,0ah,'Do U want to convert Dec number?Enter Y or N: $'
+     msg2 db 0dh,0ah,'How many digits your number has? $'
+     msg3 db 0dh,0ah,'Result in Hex: $'
+     msg4 db 0dh,0ah,'Invalid $' 
+     msg5 db 0dh,0ah,'Enter the Decimal Number: $'  
+     msg6 db 0dh,0ah,'Enter the 1st Digit: $'
+     msg7 db 0dh,0ah,'Enter the 2nd Digit: $'
+     
+ .code                           
+ main proc 
+    
+    mov ax,@data
+    mov ds,ax 
+    
+    option:
+    mov ah,9
+    lea dx,msg1
+    int 21h 
+    
+    mov ah,1
+    int 21h ;Enter Y or N  
+    
+    cmp al,'Y'
+    je y
+    cmp al,'y'
+    je y
+    jmp n
+    
+    y:
+      mov ah,9
+      lea dx,msg2
+      int 21h
+      
+      mov ah,1
+      int 21h
+      
+      cmp al,'1'
+      je one
+      cmp al,'2'
+      je two
+      jmp invalid  
+      
+      one:   
+           mov ah,9
+           lea dx,msg5
+           int 21h
+           
+           mov ah,1
+           int 21h
+           mov bh,al
+           
+           mov ah,9
+           lea dx,msg3
+           int 21h
+           
+           mov ah,2
+           mov dl,bh
+           int 21h
+           jmp option
+            
+      
+      two: 
+           mov ah,9
+           lea dx,msg6
+           int 21h
+           
+           mov ah,1
+           int 21h
+           mov bh,al    ;For 1st digit
+           
+           mov ah,9
+           lea dx,msg7
+           int 21h  
+           
+           mov ah,1
+           int 21h
+           mov ch,al   ;For 2nd digit
+           
+           cmp bh,'1'
+           je t1
+           cmp bh,'2'
+           je l3
+           jmp invalid
+           
+           t1:
+                cmp ch,'0'
+                jge c1
+                jmp c2
+                
+               c1:
+               
+                cmp ch,'5'
+                jle l1
+                jmp c2
+          
+           
+        l1: 
+                add ch,11h
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                
+                mov dl,ch
+                mov ah,2
+                int 21h 
+                jmp option
+           
+        c2:
+                cmp ch,'6'
+                jge c3
+                jmp invalid
+                
+        c3:
+                cmp ch,'9'
+                jle l2
+                jmp invalid
+                        
+        l2:      
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                
+                mov ah,2
+                mov dl,'1'
+                int 21h
+                sub ch,6h
+                mov dl,ch
+                int 21h
+                jmp option
+               
+        l3: 
+              cmp ch,'0'
+              jge m1
+              jmp invalid
+              
+              m1:
+                cmp ch,'5'
+                jle m2 
+                jmp invalid
+                
+              m2:
+              
+                mov ah,9
+                lea dx,msg3
+                int 21h
+                mov ah,2
+                mov dl,'1'
+                int 21h
+                add ch,4h
+                mov dl,ch
+                int 21h
+                jmp option
+              
+              
+      invalid:
+      
+          mov ah,9
+          lea dx,msg4
+          int 21h
+          jmp option
+    n:
+        mov ah,4ch
+        int 21h
+    
+    main endp
+ end main
+
+
+
+######HEX to HEX print#####
+mov bx,568Bh
+mov cx,4
+
+
+t1:
+mov dl,bh
+ror dl,4
+and dl,0fh
+cmp dl,0Ah
+jge l2
+jmp l1
+
+l1:
+or dl,30h
+mov ah,2
+int 21h
+shl bx,4
+loop t1
+jmp exit
+
+l2:
+xor dl,40h
+sub dl,9h
+mov ah,2
+int 21h
+shl bx,4
+loop t1
+
+
+
+
+exit:
+mov ah,4ch
+int 21h
+
+
+
+
+######LAB 4#####
+.model small
+.stack 100h
+
+.data
+     
+         msg1 db 'Enter 2 int values....$'
+         msg2 db 0dh,0ah,'The result of $'
+         msg3 db ' & $'
+         msg4 db  ' is $'
+         a db ?
+         b db ?
+    
+
+.code      
+  
+main proc  
+    mov ax,@data
+    mov ds,ax  
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov a,al
+    
+    mov ah,2
+    mov dl,' '
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov b,al
+    
+    mov ah,9
+    lea dx,msg2
+    int 21h
+    
+    mov ah,2
+    mov dl,a
+    int 21h
+    
+    mov ah,9
+    lea dx,msg3
+    int 21h
+    
+    mov ah,2
+    mov dl,b
+    int 21h
+    
+    mov ah,9
+    lea dx,msg4
+    int 21h 
+     
+    mov bh,a
+    add b,bh
+    sub b,3Ah
+    
+    mov ah,2 
+    mov dl,'1'
+    int 21h
+    mov dl,b
+    int 21h
+    
+    mov ah,4ch
+    int 21h
+    
+    
+      main endp
+end main
+
+
+
+
+####loop from USER####
+.model small
+.stack 100h
+.data
+msg1 db 'How many digits: $'
+msg2 db 0dh,0ah,'Output: $'
+
+.code
+main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov bh,al
+    sub bh,bh
+    int 21h
+    mov bl,al
+    sub bl,26h  
+    
+    
+    mov ah,9
+    lea dx,msg2
+    int 21h
+
+  
+    
+    mov ah,2
+    mov cx,bx
+    mov dl,'*'
+    
+    
+    
+    
+    l1:
+    int 21h
+    loop l1 
+    jmp exit
+    
+    exit:
+    mov ah,4ch
+    int 21h
+
+
+#####my code 1####
+.model small
+.stack 100h
+.data
+.code
+main proc
+ mov ah,1
+ mov dh,'Q'
+ int 21h
+ mov dl,al
+ mov ah,010B
+ int 21h
+ mov ah,1
+ int 21h
+ mov cl,al
+ mov bh,dh
+ mov ah,2
+ mov dl,dh
+ int 21h
+ mov dl,bh
+ int 21h    
+    
+    
+    
+main endp
+end main
+
+
+
+
+#####my code 2####
+.model small
+.stack 100h
+.data
+.code
+main proc
+ mov ah,1
+ mov dh,'Q'
+ int 21h
+ mov dl,al
+ mov ah,010B
+ int 21h
+ mov ah,1
+ int 21h
+ mov cl,al
+ mov bh,dh
+ mov ah,2
+ mov dl,dh
+ int 21h
+ mov dl,bh
+ int 21h    
+    
+    
+    
+main endp
+end main
+
+
+#######NEW line print####
+.model small
+.stack 100h
+.data
+.code
+main proc
+    mov ah,1
+    int 21h
+    mov bl,al
+    int 21h
+    mov cl,al
+    
+    mov ah,2
+    mov dl,0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+
+    mov dl,'7'
+    int 21h
+    mov dl, '*'
+    int 21h
+    int 21h
+    int 21h
+    int 21h
+    
+    mov dl,0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+    
+    mov dl,'*'
+    int 21h
+    int 21h
+    mov dl,cl
+    int 21h
+    mov dl,'*'
+    int 21h
+    int 21h
+    
+    mov dl,0dh
+    int 21h
+    mov dl,0ah
+    int 21h
+     
+     
+    mov dl,'*'
+    int 21h
+    int 21h
+    mov dl,bl
+    int 21h
+    mov dl,'*'
+    int 21h
+    int 21h
+
+main endp
+end main
+
+
+
+
+
+#####show input A to AB or F to F10######
+mov ah,1
+int 21h
+
+cmp al,46h
+jl l1
+jmp l2
+
+l1:
+mov bl,al
+sub bl,37h
+shl bl,4
+inc al
+sub al,37h
+or bl,al 
+
+jmp exit
+
+l2:
+mov bl,al
+sub bl,37h
+shl bx,8 
+inc al
+sub al,37h
+or bl,al
+
+exit:
+
+
+
+#####strint and new line####
+
+
+.model samll
+.stack 100h
+.data
+msg db 0dh,0ah,'$'
+msg1 db '1st input:$'
+msg2 db '2nd input:$'
+msg3 db 'Output:$'
+.code
+main proc
+    mov ax,@data
+    mov ds,ax       
+    mov ah,9
+    lea dx,msg1  
+    int 21h
+    
+    mov ah,1
+    
+    int 21h
+    
+    mov bl,al
+    
+    mov ah,9
+    lea dx,msg
+    int 21h
+    lea dx,msg2
+    int 21h  
+    
+    mov ah,1
+   
+    int 21h
+    mov cl,al
+    
+    mov ah,9
+    lea dx,msg
+    int 21h
+    lea dx,msg3
+    int 21h
+    
+    lea dx,msg
+    int 21h
+    
+    mov ah,2
+    mov dl,bl
+    int 21h  
+    
+    mov ah,9
+    lea dx,msg
+    int 21h
+    
+    mov ah,2
+    mov dl,cl
+    int 21h  
+    
+    
+    
+    
+    
+
+######using variable#####
+
+
+.model small
+.stack 100h
+
+.data
+     
+         msg1 db 'Enter 2 int values....$'
+         msg2 db 0dh,0ah,'The result of $'
+         msg3 db ' & $'
+         msg4 db  ' is $'
+         a db ?
+         b db ?
+    
+
+.code      
+  
+main proc  
+    mov ax,@data
+    mov ds,ax  
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov a,al
+    
+    mov ah,2
+    mov dl,' '
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov b,al
+    
+    mov ah,9
+    lea dx,msg2
+    int 21h
+    
+    mov ah,2
+    mov dl,a
+    int 21h
+    
+    mov ah,9
+    lea dx,msg3
+    int 21h
+    
+    mov ah,2
+    mov dl,b
+    int 21h
+    
+    mov ah,9
+    lea dx,msg4
+    int 21h 
+     
+    mov bh,a
+    add b,bh
+    sub b,3Ah
+    
+    mov ah,2 
+    mov dl,'1'
+    int 21h
+    mov dl,b
+    int 21h
+    
+    mov ah,4ch
+    int 21h
+    
+    
+      main endp
+end main
+
+
+

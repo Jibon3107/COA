@@ -1,0 +1,216 @@
+.model small
+.stack 100h
+.data
+    msg1 db 0dh,0ah,'Do U want to convert or Exit?Press Y to convert: $'
+    msg2 db 0dh,0ah,'How many digits your number has? $'
+    msg3 db 0dh,0ah,'Enter the Decimal Number: $'
+    msg4 db 0dh,0ah,'Enter the 1st digit: $ '
+    msg5 db 0dh,0ah,'Enter the 2nd digit: $ '
+    msg6 db 0dh,0ah,'Result in Octal Number: $'
+    msg7 db 0dh,0ah,'Invalid $'
+.code
+main proc
+    
+    mov ax,@data
+    mov ds,ax
+    
+    option:
+    
+    mov ah,9
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    
+    cmp al,'Y'
+    je y
+    cmp al,'y'
+    je y
+    cmp al,'N'
+    je n
+    cmp al,'n'
+    je n
+    jmp invalid
+    
+    y:
+    
+         mov ah,9
+         lea dx,msg2
+         int 21h
+         
+         mov ah,1
+         int 21h
+         mov bh,al
+         
+         cmp bh,'1'
+         je one
+         
+         cmp bh,'2'
+         je two
+         
+         jmp invalid
+         
+         
+         one:
+             mov ah,9
+             lea dx,msg3
+             int 21h
+             
+             mov ah,1
+             int 21h
+             mov bh,al
+             
+             cmp bh,'0'
+             jge c1
+             jmp c2
+             
+             c1:
+                cmp bh,'7'
+                jle if1
+                jmp c2
+                
+                if1:
+                    mov ah,9
+                    lea dx,msg6
+                    int 21h 
+                    
+                    mov ah,2
+                    mov dl,bh
+                    int 21h
+                    jmp option
+             
+                c2: 
+                cmp bh,'8'
+                je if2
+                cmp bh,'9'
+                je if2
+                jmp invalid
+                
+                if2:
+                
+                mov ah,9
+                lea dx,msg6
+                int 21h
+                
+                mov dl,'1'
+                mov ah,2
+                int 21h
+                
+                sub bh,8h
+                mov dl,bh
+                int 21h
+                jmp option
+         two:
+                 mov ah,9
+                 lea dx,msg4
+                 int 21h
+                 
+                 mov ah,1
+                 int 21h
+                 mov bh,al
+                 
+                 mov ah,9
+                 lea dx,msg5
+                 int 21h 
+                 
+                 mov ah,1
+                 int 21h
+                 mov ch,al
+                 
+                 cmp bh,'1'
+                 je l1
+                 cmp bh,'2'
+                 je l2
+                 jmp invalid
+                 
+                 l1:
+                   cmp ch,'0'
+                   jge m1
+                   jmp m2
+                   
+                   m1:
+                      cmp ch,'5'
+                      jle if3
+                      jmp m2
+                      
+                      
+                   if3:
+                   
+                        mov ah,9
+                        lea dx,msg6
+                        int 21h
+                        
+                        mov ah,2
+                        mov dl,'1'
+                        int 21h
+                        
+                        add ch,2h
+                        mov dl,ch
+                        int 21h
+                        
+                        jmp option
+                   
+                   m2:
+                        cmp ch,'6'
+                        jge m3
+                        jmp invalid
+                        
+                   m3:
+                   
+                        cmp ch,'9'
+                        jle if4
+                        jmp invalid  
+                        
+                   if4:
+                   
+                        mov ah,9
+                        lea dx,msg6
+                        int 21h
+                        
+                        mov ah,2
+                        mov dl,'2'
+                        int 21h
+                        
+                        sub ch,6h
+                        mov dl,ch
+                        int 21h
+                        
+                        jmp option
+                 
+                 l2:    
+                       cmp ch,'0'
+                       jge m4
+                       jmp invalid
+                       
+                       m4:
+                       cmp ch,'3'
+                       jle if5
+                       jmp invalid
+                       
+                       if5:
+                       
+                       mov ah,9
+                       lea dx,msg6
+                       int 21h
+                       mov ah,2
+                       
+                       mov dl,'2'
+                       int 21h
+                       add ch,4h
+                       mov dl,ch
+                       int 21h
+                       jmp option
+    
+    invalid:
+               mov ah,9
+               lea dx,msg7
+               int 21h
+               jmp option
+    
+    n:
+       mov ah,4ch
+       int 21h 
+    main endp
+end main
+                                                
